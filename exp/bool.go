@@ -75,7 +75,8 @@ func inNotIn(lhs Expression, op BooleanOperation, vals ...interface{}) BooleanEx
 		if valType.Kind() == reflect.Slice {
 			return NewBooleanExpression(op, lhs, vals[0])
 		}
-		if _, ok := vals[0].(AppendableExpression); ok {
+		switch vals[0].(type) {
+		case AppendableExpression, SQLExpression:
 			return NewBooleanExpression(op, lhs, vals[0])
 		}
 	}
